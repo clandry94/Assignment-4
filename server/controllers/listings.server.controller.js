@@ -55,13 +55,19 @@ exports.update = function(req, res) {
 /* Delete a listing */
 exports.delete = function(req, res) {
   var listing = req.listing;
-
+  
   /* Remove the article */
 };
 
 /* Retreive all the directory listings, sorted alphabetically by listing code */
 exports.list = function(req, res) {
-  /* Your code here */
+  Listing.find().exec(function(err, listings) {
+    if(err) {
+      res.status(400).send(err);
+    } else {
+      res.json = listing;
+    }
+  });
 };
 
 /* 
