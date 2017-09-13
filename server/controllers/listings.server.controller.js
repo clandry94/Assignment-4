@@ -55,7 +55,19 @@ exports.update = function(req, res) {
 /* Delete a listing */
 exports.delete = function(req, res) {
   var listing = req.listing;
-  
+  Listing.findOne(listing).exec(function(err, listing) {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+    } else {
+      listing.remove(function(err) {
+        if (err) {
+          console.log(err);
+          res.status(400).send(err);
+        }
+      });
+    }
+  }); 
   /* Remove the article */
 };
 
@@ -63,9 +75,10 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
   Listing.find().exec(function(err, listings) {
     if(err) {
+      console.log(err);
       res.status(400).send(err);
     } else {
-      res.json = listing;
+      res.json(listings);
     }
   });
 };
